@@ -6,7 +6,8 @@
         scope: {
           lockx: '=',
           locky: '=',
-          resizex: '='
+          resizex: '=',
+          resizey: '='
         },
         link: function (scope, element, attrs) {
           // valiables
@@ -85,6 +86,46 @@
             // compile and append to html
             $compile(xHandle)(scope);
             element.append(xHandle);
+          }
+
+          // resize handler y-axis
+          if (scope.resizey) {
+            // valiables
+            var yHandleStart = 0, yHandleDiff = element.prop('offsetHeight');
+            // handle jqlite object
+            var yHandle = angular.element('<div/>');
+            // styles
+            yHandle.css({
+              zIndex: 90, cursor: 's-resize', height: '7px', bottom: '-5px', left: 0, width: '100%',
+              position: 'absolute', display: 'block', touchAction: 'none'
+            });
+
+            // event handler
+            var yHandleMouseMove = function (e) {
+              yHandleDiff = e.screenY - yHandleStart;
+              element.css({height: yHandleDiff + 'px'});
+            };
+            var yHandleMouseUp = function (e) {
+              $document.off('mousemove', yHandleMouseMove);
+              $document.off('mouseup', yHandleMouseUp);
+            };
+            var yHandleMouseDown = function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              // set default positions
+              yHandleStart = e.screenY - yHandleDiff;
+
+              // add handler
+              $document.on('mousemove', yHandleMouseMove);
+              $document.on('mouseup', yHandleMouseUp);
+            };
+
+            // bind handlers
+            yHandle.bind('mousedown', yHandleMouseDown);
+
+            // compile and append to html
+            $compile(yHandle)(scope);
+            element.append(yHandle);
           }
         }
       };
