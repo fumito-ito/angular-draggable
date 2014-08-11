@@ -51,7 +51,7 @@
           // resize handler x-axis
           if (scope.resizex) {
             // valiables
-            var xHandleStart = 0, xHandleDiff = 0;
+            var xHandleStart = 0, xHandleDiff = element.prop('offsetWidth');
             // handle jqlite object
             var xHandle = angular.element('<div/>');
             // styles
@@ -61,7 +61,7 @@
             });
             // event handler
             var xHandleMouseMove = function (e) {
-              xHandleDiff = e.screenX - xHandleStart - x;
+              xHandleDiff = e.screenX - xHandleStart;
               element.css({width: xHandleDiff + 'px'});
             };
             var xHandleMouseUp = function (e) {
@@ -72,7 +72,7 @@
               e.preventDefault();
               e.stopPropagation();
               // set default positions
-              xHandleStartX = e.screenX - xHandleDiff;
+              xHandleStart = e.screenX - xHandleDiff;
 
               // add handler
               $document.on('mousemove', xHandleMouseMove);
