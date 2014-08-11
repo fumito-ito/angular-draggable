@@ -3,6 +3,10 @@
     .directive('draggable', ['$document', function ($document) {
       return {
         restrict: 'EA',
+        scope: {
+          lockx: '=',
+          locky: '='
+        },
         link: function (scope, element, attrs) {
           // valiables
           var x = 0, y = 0, startX = 0, startY = 0;
@@ -11,7 +15,13 @@
             x = event.screenX - startX;
             y = event.screenY - startY;
 
-            element.css({top: y + 'px', left: x + 'px'});
+            if (!scope.lockx) {
+              element.css({left: x + 'px'});
+            }
+
+            if (!scope.locky) {
+              element.css({top: y + 'px'});
+            }
           };
 
           var onMouseUp = function (e) {
