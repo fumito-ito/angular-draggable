@@ -44,7 +44,7 @@
 
           // style
           element.css({
-            position: 'relative',
+            position: 'absolute',
             cursor: 'pointer',
             top: (scope.top || 0) + 'px',
             left: (scope.left || 0) + 'px'

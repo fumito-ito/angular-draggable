@@ -11,6 +11,15 @@
         }
 
         .container > div {
+            min-height: 100px;
+            width: 100px;
+            background-color: #fefefe;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            position: relative;
+        }
+
+        .container > div > div {
             min-height: 50px;
             width: 50px;
             background-color: #f5f5f5;
@@ -26,12 +35,24 @@
 </head>
 <body ng-app="SampleApp">
     <div class="container">
-        <div draggable><p>Foo</p></div>
-        <div draggable lockx="true">lockX</div>
-        <div draggable locky="true">lockY</div>
-        <div draggable top="100" left="100"><p>Default Positioned</p></div>
-        <div draggable resizex="true"><p>xHandle</p></div>
-        <div draggable resizey="true"><p>yHandle</p></div>
+        <div>
+            <div draggable><p>Foo</p></div>
+        </div>
+        <div>
+            <div draggable lockx="true">lockX</div>
+        </div>
+        <div>
+            <div draggable locky="true">lockY</div>
+        </div>
+        <div>
+            <div draggable resizex="true"><p>xHandle</p></div>
+        </div>
+        <div>
+            <div draggable resizey="true"><p>yHandle</p></div>
+        </div>
+        <div>
+            <div draggable top="100" left="100"><p>Default Positioned</p></div>
+        </div>
     </div>
 </body>
 </html>
