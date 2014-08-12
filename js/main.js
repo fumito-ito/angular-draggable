@@ -7,11 +7,13 @@
           lockx: '=',
           locky: '=',
           resizex: '=',
-          resizey: '='
+          resizey: '=',
+          left: '@',
+          top: '@'
         },
         link: function (scope, element, attrs) {
           // valiables
-          var x = 0, y = 0, startX = 0, startY = 0;
+          var x = scope.left || 0, y = scope.top || 0, startX = 0, startY = 0;
           // event handlers
           var onMouseMove = function (e) {
             x = e.screenX - startX;
@@ -43,7 +45,9 @@
           // style
           element.css({
             position: 'relative',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            top: (scope.top || 0) + 'px',
+            left: (scope.left || 0) + 'px'
           });
 
           // event handler binding
