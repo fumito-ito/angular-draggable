@@ -1,7 +1,85 @@
 Angular Draggable
 =====
 
-Simple draggable directive
+Draggable and Resizable element as [AngularJS](https://angularjs.org/) directive.
+
+## Demo
+
+T.B.D.
+
+## Usage
+
+setup in HTML
+
+    <script src="path/to/angular.js"></script>
+	<script src="path/to/angular-draggable/js/main.js"></script>
+    <script>
+      angular.module('sample', ['angular-draggable', function () {}]);
+	</script>
+
+use with div
+
+    <div draggable>
+	  <p>Draggable Content</p>
+	</div>
+
+or element.
+
+    <draggable>
+	  <p>Draggable Content</p>
+	</draggable>
+
+You can use some options.
+
+    <div draggable [option name]="[option value]"></div>
+
+## Options
+
+#### lockx
+
+*boolean*
+
+If true, element only move with y-axis.
+
+#### locky
+
+*boolean*
+
+If true, element only move with x-axis.
+
+#### resizex
+
+*boolean*
+
+If true, element can be resized with x-axis.
+
+#### resizey
+
+*boolean*
+
+If true, element can be resized with y-axis.
+
+#### left
+
+*number*
+
+default position of left. (This library ignore css properties `top` and `left`)
+
+#### top
+
+*number*
+
+default position of top. (This library ignore css properties `top` and `left`)
+
+## Install
+
+*bower.json*
+
+    "dependencies": { "angular-draggable": "git@github.com:fumitoito/angular-draggable.git" }
+
+and run install script
+
+    $ bower install
 
 ## License
 
