@@ -5,7 +5,7 @@ Draggable and Resizable element as [AngularJS](https://angularjs.org/) directive
 
 ## Demo
 
-T.B.D.
+<script type="text/javascript" src="http://jsdo.it/blogparts/fhYt/js?width=465&height=496&view=play"></script>
 
 ## Usage
 
