@@ -9,22 +9,27 @@
           resizex: '=',
           resizey: '=',
           left: '=',
-          top: '='
+          top: '=',
+          onResizeX: '&',
+          onResizeY: '&'
         },
         link: function (scope, element, attrs) {
           // valiables
-          var x = scope.left || 0, y = scope.top || 0, startX = 0, startY = 0;
+          var startX = 0;
+          var startY = 0;
+          scope.onResizeX = scope.onResizeX || angular.noop;
+          scope.onResizeY = scope.onResizeY || angular.noop;
           // event handlers
           var onMouseMove = function (e) {
-            x = e.screenX - startX;
-            y = e.screenY - startY;
+            scope.left = e.screenX - startX;
+            scope.top = e.screenY - startY;
 
             if (!scope.lockx) {
-              element.css({left: x + 'px'});
+              element.css({left: scope.left + 'px'});
             }
 
             if (!scope.locky) {
-              element.css({top: y + 'px'});
+              element.css({top: scope.top + 'px'});
             }
           };
 
@@ -36,8 +41,8 @@
           var onMouseDown = function (e) {
             // Prevent default dragging of selected content
             e.preventDefault();
-            startX = e.screenX - x;
-            startY = e.screenY - y;
+            startX = e.screenX - scope.left;
+            startY = e.screenY - scope.top;
             $document.on('mousemove', onMouseMove);
             $document.on('mouseup', onMouseUp);
           };
@@ -70,6 +75,7 @@
               element.css({width: xHandleDiff + 'px'});
             };
             var xHandleMouseUp = function (e) {
+              scope.onResizeX();
               $document.off('mousemove', xHandleMouseMove);
               $document.off('mouseup', xHandleMouseUp);
             };
@@ -110,6 +116,7 @@
               element.css({height: yHandleDiff + 'px'});
             };
             var yHandleMouseUp = function (e) {
+              scope.onResizeY();
               $document.off('mousemove', yHandleMouseMove);
               $document.off('mouseup', yHandleMouseUp);
             };
