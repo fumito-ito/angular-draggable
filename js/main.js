@@ -8,8 +8,8 @@
           locky: '=',
           resizex: '=',
           resizey: '=',
-          left: '@',
-          top: '@'
+          left: '=',
+          top: '='
         },
         link: function (scope, element, attrs) {
           // valiables
