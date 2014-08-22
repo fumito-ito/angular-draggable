@@ -17,19 +17,21 @@
           // valiables
           var startX = 0;
           var startY = 0;
+          var left = scope.left || 0;
+          var top = scope.top || 0;
           scope.onResizeX = scope.onResizeX || angular.noop;
           scope.onResizeY = scope.onResizeY || angular.noop;
           // event handlers
           var onMouseMove = function (e) {
-            scope.left = e.screenX - startX;
-            scope.top = e.screenY - startY;
+            left = e.screenX - startX;
+            top = e.screenY - startY;
 
             if (!scope.lockx) {
-              element.css({left: scope.left + 'px'});
+              element.css({left: left + 'px'});
             }
 
             if (!scope.locky) {
-              element.css({top: scope.top + 'px'});
+              element.css({top: top + 'px'});
             }
           };
 
@@ -41,8 +43,8 @@
           var onMouseDown = function (e) {
             // Prevent default dragging of selected content
             e.preventDefault();
-            startX = e.screenX - scope.left;
-            startY = e.screenY - scope.top;
+            startX = e.screenX - left;
+            startY = e.screenY - top;
             $document.on('mousemove', onMouseMove);
             $document.on('mouseup', onMouseUp);
           };
@@ -51,8 +53,8 @@
           element.css({
             position: 'absolute',
             cursor: 'pointer',
-            top: (scope.top || 0) + 'px',
-            left: (scope.left || 0) + 'px'
+            top: (top || 0) + 'px',
+            left: (left || 0) + 'px'
           });
 
           // event handler binding
