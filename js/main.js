@@ -25,6 +25,12 @@
           var onMouseMove = function (e) {
             left = e.screenX - startX;
             top = e.screenY - startY;
+            if (angular.isDefined(scope.left)) {
+              scope.left = left;
+            }
+            if (angular.isDefined(scope.top)) {
+              scope.top = top;
+            }
 
             if (!scope.lockx) {
               element.css({left: left + 'px'});

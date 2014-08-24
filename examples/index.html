@@ -30,11 +30,17 @@
     <script src="../bower_components/angular/angular.min.js"></script>
     <script src="../js/main.js"></script>
     <script>
-        angular.module('SampleApp', ['angular-draggable', function () {}]);
+        angular.module('SampleApp', ['angular-draggable']).controller('SampleCtrl', function ($scope) {
+            $scope.top = 100;
+            $scope.left = 100;
+            $scope.show = function () {
+                console.log($scope.top + ' ' + $scope.left);
+            };
+        });
     </script>
 </head>
 <body ng-app="SampleApp">
-    <div class="container">
+    <div class="container" ng-controller="SampleCtrl">
         <div>
             <div draggable><p>Default</p></div>
         </div>
@@ -50,8 +56,10 @@
         <div>
             <div draggable resizey="true"><p>yHandle</p></div>
         </div>
-        <div>
-            <div draggable top="100" left="100"><p>Default Positioned</p></div>
+        <div ng-click="show()">
+            <p>top={{top}}</p>
+            <p>left={{left}}</p>
+            <div draggable top="top" left="left"><p>Default Positioned</p></div>
         </div>
     </div>
 </body>
