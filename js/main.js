@@ -33,6 +33,7 @@
             if (angular.isDefined(scope.top)) {
               scope.top = top;
             }
+            scope.$apply();
 
             if (!scope.lockx) {
               element.css({left: left + 'px'});
@@ -60,16 +61,14 @@
           // style
           element.css({
             position: 'absolute',
-            cursor: 'pointer',
-            top: (top || 0) + 'px',
-            left: (left || 0) + 'px'
+            cursor: 'pointer'
           });
 
           if (scope.top) {
-            element.css({top: scope.top});
+            element.css({top: scope.top + 'px'});
           }
           if (scope.left) {
-            element.css({left: scope.left});
+            element.css({left: scope.left + 'px'});
           }
           if (scope.width) {
             element.css({width: scope.width + 'px'});
@@ -96,6 +95,10 @@
             // event handler
             var xHandleMouseMove = function (e) {
               width = +width + e.screenX - xHandleStart;
+              if (angular.isDefined(scope.width)) {
+                scope.width = width;
+                scope.$apply();
+              }
               xHandleStart = e.screenX;
               element.css({width: width + 'px'});
             };
@@ -139,6 +142,10 @@
             // event handler
             var yHandleMouseMove = function (e) {
               height = +height + e.screenY - yHandleStart;
+              if (angular.isDefined(scope.height)) {
+                scope.height = height;
+                scope.$apply();
+              }
               yHandleStart = e.screenY;
               element.css({height: height + 'px'});
             };

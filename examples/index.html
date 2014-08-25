@@ -36,10 +36,8 @@
             $scope.show = function () {
                 console.log($scope.top + ' ' + $scope.left);
             };
-            $scope.style = {
-                width: "100",
-                height: "100"
-            }
+            $scope.width = 100;
+            $scope.height = 100;
         });
     </script>
 </head>
@@ -66,9 +64,9 @@
             <div draggable top="top" left="left"><p>Default Positioned</p></div>
         </div>
         <div>
-            <p>width={{style.width}}</p>
-            <p>height={{style.height}}</p>
-            <div draggable resizex="true" resizey="true" width="style.width" height="style.height"><p>Default Resized</p></div>
+            <p>width={{width}}</p>
+            <p>height={{height}}</p>
+            <div draggable resizex="true" resizey="true" width="width" height="height"><p>Default Resized</p></div>
         </div>
     </div>
 </body>
