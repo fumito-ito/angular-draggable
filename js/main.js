@@ -10,6 +10,8 @@
           resizey: '=',
           left: '=',
           top: '=',
+          width: '=',
+          height: '=',
           onResizeX: '&',
           onResizeY: '&'
         },
@@ -63,13 +65,27 @@
             left: (left || 0) + 'px'
           });
 
+          if (scope.top) {
+            element.css({top: scope.top});
+          }
+          if (scope.left) {
+            element.css({left: scope.left});
+          }
+          if (scope.width) {
+            element.css({width: scope.width + 'px'});
+          }
+          if (scope.height) {
+            element.css({height: scope.height + 'px'});
+          }
+
           // event handler binding
           element.on('mousedown', onMouseDown);
 
           // resize handler x-axis
           if (scope.resizex) {
             // valiables
-            var xHandleStart = 0, xHandleDiff = element.prop('offsetWidth');
+            var xHandleStart = 0;
+            var width = scope.width || element.prop('offsetWidth');
             // handle jqlite object
             var xHandle = angular.element('<div/>');
             // styles
@@ -79,8 +95,9 @@
             });
             // event handler
             var xHandleMouseMove = function (e) {
-              xHandleDiff = e.screenX - xHandleStart;
-              element.css({width: xHandleDiff + 'px'});
+              width = +width + e.screenX - xHandleStart;
+              xHandleStart = e.screenX;
+              element.css({width: width + 'px'});
             };
             var xHandleMouseUp = function (e) {
               scope.onResizeX();
@@ -91,7 +108,7 @@
               e.preventDefault();
               e.stopPropagation();
               // set default positions
-              xHandleStart = e.screenX - xHandleDiff;
+              xHandleStart = e.screenX;
 
               // add handler
               $document.on('mousemove', xHandleMouseMove);
@@ -109,7 +126,8 @@
           // resize handler y-axis
           if (scope.resizey) {
             // valiables
-            var yHandleStart = 0, yHandleDiff = element.prop('offsetHeight');
+            var height = scope.height || element.prop('offsetHeight');
+            var yHandleStart = 0;
             // handle jqlite object
             var yHandle = angular.element('<div/>');
             // styles
@@ -120,19 +138,22 @@
 
             // event handler
             var yHandleMouseMove = function (e) {
-              yHandleDiff = e.screenY - yHandleStart;
-              element.css({height: yHandleDiff + 'px'});
+              height = +height + e.screenY - yHandleStart;
+              yHandleStart = e.screenY;
+              element.css({height: height + 'px'});
             };
+
             var yHandleMouseUp = function (e) {
               scope.onResizeY();
               $document.off('mousemove', yHandleMouseMove);
               $document.off('mouseup', yHandleMouseUp);
             };
+
             var yHandleMouseDown = function (e) {
               e.preventDefault();
               e.stopPropagation();
               // set default positions
-              yHandleStart = e.screenY - yHandleDiff;
+              yHandleStart = e.screenY;
 
               // add handler
               $document.on('mousemove', yHandleMouseMove);
