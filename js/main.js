@@ -61,15 +61,11 @@
           // style
           element.css({
             position: 'absolute',
-            cursor: 'pointer'
+            cursor: 'pointer',
+	    top: top + 'px',
+	    left: left + 'px'
           });
 
-          if (angular.isDefined(scope.top)) {
-            element.css({top: scope.top + 'px'});
-          }
-          if (angular.isDefined(scope.left)) {
-            element.css({left: scope.left + 'px'});
-          }
           if (angular.isDefined(scope.width)) {
             element.css({width: scope.width + 'px'});
           }
