@@ -64,16 +64,16 @@
             cursor: 'pointer'
           });
 
-          if (scope.top) {
+          if (angular.isDefined(scope.top)) {
             element.css({top: scope.top + 'px'});
           }
-          if (scope.left) {
+          if (angular.isDefined(scope.left)) {
             element.css({left: scope.left + 'px'});
           }
-          if (scope.width) {
+          if (angular.isDefined(scope.width)) {
             element.css({width: scope.width + 'px'});
           }
-          if (scope.height) {
+          if (angular.isDefined(scope.height)) {
             element.css({height: scope.height + 'px'});
           }
 
