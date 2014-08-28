@@ -1,6 +1,6 @@
 (function () {
   angular.module('angular-draggable', [])
-    .directive('draggable', ['$document', '$compile', function ($document, $compile) {
+    .directive('ngDraggable', ['$document', '$compile', function ($document, $compile) {
       return {
         restrict: 'EA',
         template: '<div ng-transclude></div>',
