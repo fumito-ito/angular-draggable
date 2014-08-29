@@ -1,8 +1,11 @@
 (function () {
   angular.module('angular-draggable', [])
-    .directive('draggable', ['$document', '$compile', function ($document, $compile) {
+    .directive('ngDraggable', ['$document', '$compile', function ($document, $compile) {
       return {
         restrict: 'EA',
+        template: '<div ng-transclude></div>',
+        transclude: true,
+        replace: true,
         scope: {
           lockx: '=',
           locky: '=',
@@ -62,8 +65,8 @@
           element.css({
             position: 'absolute',
             cursor: 'pointer',
-	    top: top + 'px',
-	    left: left + 'px'
+            top: top + 'px',
+            left: left + 'px'
           });
 
           if (angular.isDefined(scope.width)) {

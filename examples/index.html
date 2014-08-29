@@ -44,29 +44,29 @@
 <body ng-app="SampleApp">
     <div class="container" ng-controller="SampleCtrl">
         <div>
-            <div draggable><p>Default</p></div>
+            <ng-draggable><p>Default</p></ng-draggable>
         </div>
         <div>
-            <div draggable lockx="true">lockX</div>
+            <div ng-draggable lockx="true">lockX</div>
         </div>
         <div>
-            <div draggable locky="true">lockY</div>
+            <div ng-draggable locky="true">lockY</div>
         </div>
         <div>
-            <div draggable resizex="true"><p>xHandle</p></div>
+            <div ng-draggable resizex="true"><p>xHandle</p></div>
         </div>
         <div>
-            <div draggable resizey="true"><p>yHandle</p></div>
+            <div ng-draggable resizey="true"><p>yHandle</p></div>
         </div>
         <div ng-click="show()">
             <p>top={{top}}</p>
             <p>left={{left}}</p>
-            <div draggable top="top" left="left"><p>Default Positioned</p></div>
+            <div ng-draggable top="top" left="left"><p>Default Positioned</p></div>
         </div>
         <div>
             <p>width={{width}}</p>
             <p>height={{height}}</p>
-            <div draggable resizex="true" resizey="true" width="width" height="height"><p>Default Resized</p></div>
+            <div ng-draggable resizex="true" resizey="true" width="width" height="height"><p>Default Resized</p></div>
         </div>
     </div>
 </body>
