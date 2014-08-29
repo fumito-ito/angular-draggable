@@ -27,10 +27,10 @@
           var onMouseMove = function (e) {
             left = e.screenX - startX;
             top = e.screenY - startY;
-            if (angular.isDefined(scope.left)) {
+            if (angular.isDefined(scope.left) && !scope.lockx) {
               scope.left = left;
             }
-            if (angular.isDefined(scope.top)) {
+            if (angular.isDefined(scope.top) && !scope.locky) {
               scope.top = top;
             }
             scope.$apply();
