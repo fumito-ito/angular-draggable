@@ -102,9 +102,14 @@
               element.css({width: width + 'px'});
             };
             var xHandleMouseUp = function (e) {
-              scope.onResizeX();
-              $document.off('mousemove', xHandleMouseMove);
-              $document.off('mouseup', xHandleMouseUp);
+              try {
+                scope.onResizeX();
+              } catch (e) {
+                console.log('ResizeY callback has following error :: ' + e.message);
+              } finally {
+                $document.off('mousemove', xHandleMouseMove);
+                $document.off('mouseup', xHandleMouseUp);
+              }
             };
             var xHandleMouseDown = function (e) {
               e.preventDefault();
@@ -150,9 +155,14 @@
             };
 
             var yHandleMouseUp = function (e) {
-              scope.onResizeY();
-              $document.off('mousemove', yHandleMouseMove);
-              $document.off('mouseup', yHandleMouseUp);
+              try {
+                scope.onResizeY();
+              } catch (e) {
+                console.log('ResizeY callback has following error :: ' + e.message);
+              } finally {
+                $document.off('mousemove', yHandleMouseMove);
+                $document.off('mouseup', yHandleMouseUp);
+              }
             };
 
             var yHandleMouseDown = function (e) {
