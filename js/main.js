@@ -86,48 +86,91 @@
             var width = scope.width || element.prop('offsetWidth');
             // handle jqlite object
             var xHandle = angular.element('<div/>');
+            var xHandle2 = angular.element('<div/>');
+
             // styles
             xHandle.css({
               zIndex: 90, cursor: 'e-resize', width: '7px', right: '-5px', top: 0, height: '100%',
               position: 'absolute', display: 'block', touchAction: 'none'
             });
+            xHandle2.css({
+              zIndex: 90, cursor: 'w-resize', width: '7px', left: '-5px', top: 0, height: '100%',
+              position: 'absolute', display: 'block', touchAction: 'none'
+            });
             // event handler
-            var xHandleMouseMove = function (e) {
-              width = +width + e.screenX - xHandleStart;
+            var xHandleMouseMoveRight = function (e) {
+              var diff = e.screenX - xHandleStart;
+              width = +width + diff;
               if (angular.isDefined(scope.width)) {
                 scope.width = width;
                 scope.$apply();
               }
+
               xHandleStart = e.screenX;
               element.css({width: width + 'px'});
             };
-            var xHandleMouseUp = function (e) {
+            var xHandleMouseMoveLeft = function (e) {
+              var diff = e.screenX - xHandleStart;
+              left = left + diff;
+              width = +width - diff;
+              if (angular.isDefined(scope.width)) {
+                scope.width = width;
+                scope.$apply();
+              }
+
+              xHandleStart = e.screenX;
+              element.css({width: width + 'px', left: left + 'px'});
+            };
+            var xHandleMouseUpRight = function (e) {
               try {
                 scope.onResizeX();
               } catch (e) {
                 console.log('ResizeY callback has following error :: ' + e.message);
               } finally {
-                $document.off('mousemove', xHandleMouseMove);
-                $document.off('mouseup', xHandleMouseUp);
+                $document.off('mousemove', xHandleMouseMoveRight);
+                $document.off('mouseup', xHandleMouseUpRight);
               }
             };
-            var xHandleMouseDown = function (e) {
+            var xHandleMouseUpLeft = function (e) {
+              try {
+                scope.onResizeX();
+              } catch (e) {
+                console.log('ResizeY callback has following error :: ' + e.message);
+              } finally {
+                $document.off('mousemove', xHandleMouseMoveLeft);
+                $document.off('mouseup', xHandleMouseUpLeft);
+              }
+            };
+            var xHandleMouseDownRight = function (e) {
               e.preventDefault();
               e.stopPropagation();
               // set default positions
               xHandleStart = e.screenX;
 
               // add handler
-              $document.on('mousemove', xHandleMouseMove);
-              $document.on('mouseup', xHandleMouseUp);
+              $document.on('mousemove', xHandleMouseMoveRight);
+              $document.on('mouseup', xHandleMouseUpRight);
             };
+            var xHandleMouseDownLeft = function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              // set default positions
+              xHandleStart = e.screenX;
 
+              // add handler
+              $document.on('mousemove', xHandleMouseMoveLeft);
+              $document.on('mouseup', xHandleMouseUpLeft);
+            };
             // bind handlers
-            xHandle.bind('mousedown', xHandleMouseDown);
+            xHandle.bind('mousedown', xHandleMouseDownRight);
+            xHandle2.bind('mousedown', xHandleMouseDownLeft);
 
             // compile and append to html
             $compile(xHandle)(scope);
             element.append(xHandle);
+
+            $compile(xHandle2)(scope);
+            element.append(xHandle2)
           }
 
           // resize handler y-axis
