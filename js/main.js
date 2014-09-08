@@ -18,7 +18,7 @@
           onResizeX: '&',
           onResizeY: '&'
         },
-        link: function (scope, element, attrs) {
+        link: function (scope, element) {
           // valiables
           var startX = 0;
           var startY = 0;
@@ -47,7 +47,7 @@
             }
           };
 
-          var onMouseUp = function (e) {
+          var onMouseUp = function () {
             $document.off('mousemove', onMouseMove);
             $document.off('mouseup', onMouseUp);
           };
@@ -121,20 +121,20 @@
               xHandleStart = e.screenX;
               element.css({width: width + 'px', left: left + 'px'});
             };
-            var xHandleMouseUpRight = function (e) {
+            var xHandleMouseUpRight = function () {
               try {
                 scope.onResizeX();
-              } catch (e) {
+              } catch (ex) {
                 console.log('ResizeY callback has following error :: ' + e.message);
               } finally {
                 $document.off('mousemove', xHandleMouseMoveRight);
                 $document.off('mouseup', xHandleMouseUpRight);
               }
             };
-            var xHandleMouseUpLeft = function (e) {
+            var xHandleMouseUpLeft = function () {
               try {
                 scope.onResizeX();
-              } catch (e) {
+              } catch (ex) {
                 console.log('ResizeY callback has following error :: ' + e.message);
               } finally {
                 $document.off('mousemove', xHandleMouseMoveLeft);
@@ -179,15 +179,31 @@
             var height = scope.height || element.prop('offsetHeight');
             var yHandleStart = 0;
             // handle jqlite object
-            var yHandle = angular.element('<div/>');
+            var yHandleBottom = angular.element('<div/>');
+            var yHandleTop = angular.element('<div/>');
             // styles
-            yHandle.css({
+            yHandleBottom.css({
               zIndex: 90, cursor: 's-resize', height: '7px', bottom: '-5px', left: 0, width: '100%',
+              position: 'absolute', display: 'block', touchAction: 'none'
+            });
+            yHandleTop.css({
+              zIndex: 90, cursor: 'n-resize', height: '7px', top: '-5px', left: 0, width: '100%',
               position: 'absolute', display: 'block', touchAction: 'none'
             });
 
             // event handler
-            var yHandleMouseMove = function (e) {
+            var yHandleTopMouseMove = function (e) {
+              var diff = e.screenY - yHandleStart;
+              height = +height - diff;
+              top = top + diff;
+              if (angular.isDefined(scope.height)) {
+                  scope.height = height;
+                  scope.$apply();
+              }
+              yHandleStart = e.screenY;
+              element.css({height: height + 'px', top: top + 'px'});
+            };
+            var yHandleBottomMouseMove = function (e) {
               height = +height + e.screenY - yHandleStart;
               if (angular.isDefined(scope.height)) {
                 scope.height = height;
@@ -197,34 +213,57 @@
               element.css({height: height + 'px'});
             };
 
-            var yHandleMouseUp = function (e) {
+            var yHandleTopMouseUp = function () {
               try {
                 scope.onResizeY();
-              } catch (e) {
+              } catch (ex) {
+                console.log('ResizeY callback has following error :: ' + ex.message);
+              } finally {
+                $document.off('mousemove', yHandleTopMouseMove);
+                $document.off('mouseup', yHandleTopMouseUp);
+              }
+            };
+            var yHandleBottomMouseUp = function () {
+              try {
+                scope.onResizeY();
+              } catch (ex) {
                 console.log('ResizeY callback has following error :: ' + e.message);
               } finally {
-                $document.off('mousemove', yHandleMouseMove);
-                $document.off('mouseup', yHandleMouseUp);
+                $document.off('mousemove', yHandleBottomMouseMove);
+                $document.off('mouseup', yHandleBottomMouseUp);
               }
             };
 
-            var yHandleMouseDown = function (e) {
+            var yHandleTopMouseDown = function (e) {
               e.preventDefault();
               e.stopPropagation();
               // set default positions
               yHandleStart = e.screenY;
 
               // add handler
-              $document.on('mousemove', yHandleMouseMove);
-              $document.on('mouseup', yHandleMouseUp);
+              $document.on('mousemove', yHandleTopMouseMove);
+              $document.on('mouseup', yHandleTopMouseUp);
+            };
+            var yHandleBottomMouseDown = function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              // set default positions
+              yHandleStart = e.screenY;
+
+              // add handler
+              $document.on('mousemove', yHandleBottomMouseMove);
+              $document.on('mouseup', yHandleBottomMouseUp);
             };
 
             // bind handlers
-            yHandle.bind('mousedown', yHandleMouseDown);
+            yHandleTop.bind('mousedown', yHandleTopMouseDown);
+            yHandleBottom.bind('mousedown', yHandleBottomMouseDown);
 
             // compile and append to html
-            $compile(yHandle)(scope);
-            element.append(yHandle);
+            $compile(yHandleTop)(scope);
+            element.append(yHandleTop);
+            $compile(yHandleBottom)(scope);
+            element.append(yHandleBottom);
           }
         }
       };
