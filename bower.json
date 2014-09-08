@@ -1,6 +1,6 @@
 {
-    "name": "Angular-draggable",
-    "version": "0.0.1",
+    "name": "angular-draggable",
+    "version": "0.1.0",
     "main": "js/main.js",
     "dependencies": {
         "angular": "1.2.16"
