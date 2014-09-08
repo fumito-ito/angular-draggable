@@ -85,15 +85,15 @@
             var xHandleStart = 0;
             var width = scope.width || element.prop('offsetWidth');
             // handle jqlite object
-            var xHandle = angular.element('<div/>');
-            var xHandle2 = angular.element('<div/>');
+            var xHandleRight = angular.element('<div/>');
+            var xHandleLeft = angular.element('<div/>');
 
             // styles
-            xHandle.css({
+            xHandleRight.css({
               zIndex: 90, cursor: 'e-resize', width: '7px', right: '-5px', top: 0, height: '100%',
               position: 'absolute', display: 'block', touchAction: 'none'
             });
-            xHandle2.css({
+            xHandleLeft.css({
               zIndex: 90, cursor: 'w-resize', width: '7px', left: '-5px', top: 0, height: '100%',
               position: 'absolute', display: 'block', touchAction: 'none'
             });
@@ -162,15 +162,15 @@
               $document.on('mouseup', xHandleMouseUpLeft);
             };
             // bind handlers
-            xHandle.bind('mousedown', xHandleMouseDownRight);
-            xHandle2.bind('mousedown', xHandleMouseDownLeft);
+            xHandleRight.bind('mousedown', xHandleMouseDownRight);
+            xHandleLeft.bind('mousedown', xHandleMouseDownLeft);
 
             // compile and append to html
-            $compile(xHandle)(scope);
-            element.append(xHandle);
+            $compile(xHandleRight)(scope);
+            element.append(xHandleRight);
 
-            $compile(xHandle2)(scope);
-            element.append(xHandle2)
+            $compile(xHandleLeft)(scope);
+            element.append(xHandleLeft)
           }
 
           // resize handler y-axis
