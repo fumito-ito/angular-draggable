@@ -15,6 +15,7 @@
           top: '=',
           width: '=',
           height: '=',
+	  min: '@',
           onResizeX: '&',
           onResizeY: '&'
         },
@@ -24,6 +25,7 @@
           var startY = 0;
           var left = scope.left || 0;
           var top = scope.top || 0;
+	  var min = scope.min ? parseInt(scope.min) : 100;
           scope.onResizeX = scope.onResizeX || angular.noop;
           scope.onResizeY = scope.onResizeY || angular.noop;
           // event handlers
@@ -101,6 +103,11 @@
             var xHandleMouseMoveRight = function (e) {
               var diff = e.screenX - xHandleStart;
               width = +width + diff;
+
+	      // check for mimun width
+	      if (width < min) {
+	        width = min;
+	      }
               if (angular.isDefined(scope.width)) {
                 scope.width = width;
                 scope.$apply();
@@ -111,8 +118,14 @@
             };
             var xHandleMouseMoveLeft = function (e) {
               var diff = e.screenX - xHandleStart;
-              left = left + diff;
+              left = parseInt(left) + parseInt(diff);
               width = +width - diff;
+
+              // check for minimum width
+              if (width < min) {
+	        left = left + width - min;
+		width = min;
+	      }
               if (angular.isDefined(scope.width)) {
                 scope.width = width;
                 scope.$apply();
