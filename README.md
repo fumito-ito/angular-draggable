@@ -3,9 +3,10 @@ Angular Draggable
 
 Draggable and Resizable element as [AngularJS](https://angularjs.org/) directive.
 
-## Demo
+## Example
 
-[jsdo.it](http://jsdo.it/fumito_ito/fhYt)
+- [jsdo.it](http://jsdo.it/fumito_ito/fhYt)
+- [Plunker](http://plnkr.co/edit/7sADZkqVI6LIUIixTwns?p=preview)
 
 ## Usage
 
